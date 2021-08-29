@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: "pokemonapi", //<--put pokemon API
+    baseURL: "https://pokeapi.co/api/v2/pokemon",
     headers: {
         "Content-type": "application/json"
     }
