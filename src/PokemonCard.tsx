@@ -9,6 +9,7 @@ const PokemonCard:React.FC = () => {
 
     const [pokemonInput, setPokemonInput] = useState<PokemonInterface>(INITIAL_POKEMON)
     const [pokemonName, setPokemonName] = useState<string | null>(null)
+    const [pokemonSprite, setPokemonSprite] = useState<string>('')
     //make a button for randomizing pokemon for getRandomPokemon
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -22,6 +23,7 @@ const PokemonCard:React.FC = () => {
             const getPokemon = await Pokemon.getPokemonByName(pokemonInput.pokemonName)
             console.log(getPokemon.data)
             setPokemonName(getPokemon.data.name)
+            setPokemonSprite(getPokemon.data.sprites.front_default)
         } catch (error) {
             return error
         }
@@ -41,8 +43,12 @@ const PokemonCard:React.FC = () => {
                     <button>Get Pokemon</button>
                 </div>
             </form>
+            {/* put this in a card */}
             <div>
                 {pokemonName}
+            </div>
+            <div>
+                <img src={pokemonSprite} alt="Pokemon Sprite"/>
             </div>
         </div>
     )
