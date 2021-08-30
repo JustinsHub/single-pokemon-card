@@ -1,13 +1,13 @@
 import HTTP from '../helper-commons/http-pokemon-base'
 
 const getPokemonByName = async(pokemon: string) => {
-    let newPokemon = await HTTP.get(`/${pokemon}`)
-    console.log(newPokemon)
+    let namePokemon = await HTTP.get(`/${pokemon}`)
+    return namePokemon
 }
 
 const  getRandomPokemon = async(id: number) => {
     let randomPokemon = await HTTP.get(`/${id}`) //<-- randomize this id 
-    console.log(randomPokemon)
+    return randomPokemon
 }
 
 const Pokemon = {
