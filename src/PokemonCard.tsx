@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useState } from "react";
+import { Card } from "react-bootstrap";
 import Pokemon from "./pokemon-service/PokemonAPI";
 import PokemonInterface from "./types/Pokemon";
+import './styles/PokemonCard.css'
 
 const PokemonCard:React.FC = () => {
     const INITIAL_POKEMON:PokemonInterface = {
@@ -8,8 +10,9 @@ const PokemonCard:React.FC = () => {
     }
 
     const [pokemonInput, setPokemonInput] = useState<PokemonInterface>(INITIAL_POKEMON)
-    const [pokemonName, setPokemonName] = useState<string | null>(null)
+    const [pokemonName, setPokemonName] = useState<string | null>('')
     const [pokemonSprite, setPokemonSprite] = useState<string>('')
+    const [isLoaded, setIsLoaded] = useState<boolean>(false)
     //make a button for randomizing pokemon for getRandomPokemon
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,13 +27,34 @@ const PokemonCard:React.FC = () => {
             console.log(getPokemon.data)
             setPokemonName(getPokemon.data.name)
             setPokemonSprite(getPokemon.data.sprites.front_default)
+            setIsLoaded(() => true)
         } catch (error) {
             return error
         }
     }
 
     return (
-        <div>
+        <section className="container">
+            {isLoaded ?
+            <div className="d-flex justify-content-center m-5">
+            <Card style={{ width: '18rem' }}>
+            <Card.Body>
+                <div className="d-flex justify-content-center">
+                    <img src={pokemonSprite} alt="Pokemon Sprite"/>
+                </div>
+                <Card.Title className="first-letter text-center">{pokemonName}</Card.Title>
+                <Card.Text>
+                Some quick example text to build on the card title and make up the bulk of
+                the card's content.
+                </Card.Text>
+            </Card.Body>
+            </Card>
+            </div>
+            :
+            null
+            }
+
+            <div className="pokemon-card">
             <form onSubmit={handleSubmit}>
                 <input
                 id="get-pokemon"
@@ -39,18 +63,12 @@ const PokemonCard:React.FC = () => {
                 placeholder="Pokemon Name"
                 onChange={handleChange}
                 />
-                <div>
-                    <button>Get Pokemon</button>
+                <div className="d-flex justify-content-center mt-2">
+                    <button className="btn btn-primary">Get Pokemon</button>
                 </div>
             </form>
-            {/* put this in a card */}
-            <div>
-                {pokemonName}
             </div>
-            <div>
-                <img src={pokemonSprite} alt="Pokemon Sprite"/>
-            </div>
-        </div>
+        </section>
     )
 }
 
