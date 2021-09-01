@@ -12,6 +12,8 @@ const PokemonCard:React.FC = () => {
     const [pokemonInput, setPokemonInput] = useState<PokemonInterface>(INITIAL_POKEMON)
     const [pokemonName, setPokemonName] = useState<string | null>('')
     const [pokemonSprite, setPokemonSprite] = useState<string>('')
+    const [pokemonAbilities, setPokemonAbilities] = useState<string>('')
+    const [pokemonCharacteristics, setPokemonCharacteristics] = useState<string>('')
     const [isLoaded, setIsLoaded] = useState<boolean>(false)
     //make a button for randomizing pokemon for getRandomPokemon
 
@@ -24,9 +26,13 @@ const PokemonCard:React.FC = () => {
         e.preventDefault()
         try {
             const getPokemon = await Pokemon.getPokemonByName(pokemonInput.pokemonName)
-            console.log(getPokemon.data)
+            const getAbilities = await Pokemon.getPokemonAbilities(getPokemon.data.id)
+            const getCharactersitics = await Pokemon.getPokemonCharacteristics(getPokemon.data.id)
+            console.log({Pokemon: getPokemon.data, Abilities: getAbilities.data, Characteristics: getCharactersitics.data})
             setPokemonName(getPokemon.data.name)
             setPokemonSprite(getPokemon.data.sprites.front_default)
+            // setPokemonAbilities(getAbilities.data)
+            // setPokemonCharacteristics(getCharactersitics.data)
             setIsLoaded(() => true)
         } catch (error) {
             return error
