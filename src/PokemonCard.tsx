@@ -11,9 +11,7 @@ const PokemonCard:React.FC = () => {
 
     const [pokemonInput, setPokemonInput] = useState<PokemonInterface>(INITIAL_POKEMON)
     const [pokemonName, setPokemonName] = useState<string | null>('')
-    const [pokemonSprite, setPokemonSprite] = useState<string>('')
-    const [pokemonAbilities, setPokemonAbilities] = useState<string>('')
-    const [pokemonCharacteristics, setPokemonCharacteristics] = useState<string>('')
+    const [pokemonFrontSprite, setPokemonFrontSprite] = useState<string>('')
     const [isLoaded, setIsLoaded] = useState<boolean>(false)
     //make a button for randomizing pokemon for getRandomPokemon
 
@@ -26,13 +24,10 @@ const PokemonCard:React.FC = () => {
         e.preventDefault()
         try {
             const getPokemon = await Pokemon.getPokemonByName(pokemonInput.pokemonName)
-            const getAbilities = await Pokemon.getPokemonAbilities(getPokemon.data.id)
-            const getCharactersitics = await Pokemon.getPokemonCharacteristics(getPokemon.data.id)
-            console.log({Pokemon: getPokemon.data, Abilities: getAbilities.data, Characteristics: getCharactersitics.data})
+            console.log({Pokemon: getPokemon.data})
             setPokemonName(getPokemon.data.name)
-            setPokemonSprite(getPokemon.data.sprites.front_default)
-            // setPokemonAbilities(getAbilities.data)
-            // setPokemonCharacteristics(getCharactersitics.data)
+            setPokemonFrontSprite(getPokemon.data.sprites.front_default)
+
             setIsLoaded(() => true)
         } catch (error) {
             return error
@@ -46,7 +41,7 @@ const PokemonCard:React.FC = () => {
             <Card style={{ width: '18rem' }}>
             <Card.Body>
                 <div className="d-flex justify-content-center">
-                    <img src={pokemonSprite} alt="Pokemon Sprite"/>
+                    <img src={pokemonFrontSprite} alt="Pokemon Sprite"/>
                 </div>
                 <Card.Title className="first-letter text-center">{pokemonName}</Card.Title>
                 <Card.Text>

@@ -10,21 +10,21 @@ const getRandomPokemon = async(id: number) => {
     return randomPokemon
 }
 
-const getPokemonAbilities = async(pokemon: string) => {
-    let pokemonAbility = await Request.AbilitiesHTTP.get(`/${pokemon}`)
-    return pokemonAbility
-}
+// const getPokemonAbilities = async(pokemon: string) => {
+//     let pokemonAbility = await Request.AbilitiesHTTP.get(`/${pokemon}`)
+//     return pokemonAbility
+// }
 
-const getPokemonCharacteristics = async(id:number)=> {
-    let pokemonCharacteristics = await Request.CharacteristicsHTTP.get(`/${id}`)
-    return pokemonCharacteristics
-}
+// const getPokemonCharacteristics = async(id:number)=> {
+//     let pokemonCharacteristics = await Request.CharacteristicsHTTP.get(`/${id}`)
+//     return pokemonCharacteristics
+// }
 
 const Pokemon = {
     getPokemonByName,
     getRandomPokemon,
-    getPokemonAbilities,
-    getPokemonCharacteristics
+    // getPokemonAbilities,
+    // getPokemonCharacteristics
 }
 
 export default Pokemon
