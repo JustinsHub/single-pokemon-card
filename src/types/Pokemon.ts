@@ -5,4 +5,5 @@ export interface PokemonCardProps {
     pokemonName: string | null,
     pokemonFrontSprite: string,
     pokemonBackSprite: string,
+    pokemonAbility: string[]
 }

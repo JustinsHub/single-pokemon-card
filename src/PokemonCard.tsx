@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Card } from "react-bootstrap";
 import { PokemonCardProps } from './types/Pokemon';
 
-const PokemonCard:React.FC<PokemonCardProps> = ({pokemonName, pokemonFrontSprite, pokemonBackSprite}) => {
+const PokemonCard:React.FC<PokemonCardProps> = ({pokemonName, pokemonFrontSprite, pokemonBackSprite, pokemonAbility}) => {
     const [toggleSprite, setToggleSprite] = useState<boolean>(false)
     //place backSprite on conditional
 
@@ -10,19 +10,23 @@ const PokemonCard:React.FC<PokemonCardProps> = ({pokemonName, pokemonFrontSprite
         setToggleSprite((toggle) => !toggle)
     }
 
+    const pokemonAbilities = 
+        <Card.Text key='1'>
+            {pokemonAbility.map((pokemon:any) => <div>{pokemon.ability.name}</div>)}
+        </Card.Text>
+    
+
     return (
         <div>
             <div className="d-flex justify-content-center m-5">
             <Card style={{ width: '18rem' }}>
             <Card.Body>
                 <div className="d-flex justify-content-center">
-                    <img onClick={toggleFrontBack} src={toggleSprite ? pokemonFrontSprite : pokemonBackSprite} alt="Pokemon Sprite"/>
+                    <img onClick={toggleFrontBack} src={!toggleSprite ? pokemonFrontSprite : pokemonBackSprite} alt="Pokemon Sprite"/>
                 </div>
                 <Card.Title className="first-letter text-center">{pokemonName}</Card.Title>
-                <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of
-                the card's content.
-                </Card.Text>
+                <Card.Subtitle>Abilities:</Card.Subtitle>
+                {pokemonAbilities}
             </Card.Body>
             </Card>
             </div>

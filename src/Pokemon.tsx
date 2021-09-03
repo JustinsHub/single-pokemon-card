@@ -3,7 +3,6 @@ import Pokemon from "./pokemon-service/PokemonAPI";
 import PokemonCard from "./PokemonCard";
 import {PokemonInterface} from "./types/Pokemon";
 import './styles/PokemonCard.css'
-
 const PokemonComponent:React.FC = () => {
     const INITIAL_POKEMON:PokemonInterface = {
         pokemonName: ''
@@ -13,6 +12,7 @@ const PokemonComponent:React.FC = () => {
     const [pokemonName, setPokemonName] = useState<string | null>('')
     const [pokemonFrontSprite, setPokemonFrontSprite] = useState<string>('')
     const [pokemonBackSprite, setPokemonBackSprite] = useState<string>('')
+    const [pokemonAbility, setPokemonAbility] = useState<string[]>([])
     const [isLoaded, setIsLoaded] = useState<boolean>(false)
     //make a button for randomizing pokemon for getRandomPokemon
 
@@ -25,11 +25,13 @@ const PokemonComponent:React.FC = () => {
         e.preventDefault()
         try {
             const getPokemon = await Pokemon.getPokemonByName(pokemonInput.pokemonName)
-            console.log({Pokemon: getPokemon.data})
+            console.log(getPokemon.data)
             setPokemonName(getPokemon.data.name)
             setPokemonFrontSprite(getPokemon.data.sprites.front_default)
             setPokemonBackSprite(getPokemon.data.sprites.back_default)
             setIsLoaded(() => true)
+            setPokemonAbility(getPokemon.data.abilities)
+            
         } catch (error) {
             return error
         }
@@ -42,6 +44,7 @@ const PokemonComponent:React.FC = () => {
             pokemonName={pokemonName}
             pokemonFrontSprite={pokemonFrontSprite} 
             pokemonBackSprite={pokemonBackSprite}
+            pokemonAbility={pokemonAbility}
             />
             :
             null
