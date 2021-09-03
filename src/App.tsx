@@ -1,10 +1,10 @@
 import React from 'react';
-import PokemonCard from './PokemonCard'
+import PokemonComponent from './Pokemon'
 
 const App:React.FC = () => {
   return (
     <div className="App">
-      <PokemonCard/>
+      <PokemonComponent/>
     </div>
   );
 }

@@ -1,47 +1,22 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from 'react'
 import { Card } from "react-bootstrap";
-import Pokemon from "./pokemon-service/PokemonAPI";
-import PokemonInterface from "./types/Pokemon";
-import './styles/PokemonCard.css'
+import { PokemonCardProps } from './types/Pokemon';
 
-const PokemonCard:React.FC = () => {
-    const INITIAL_POKEMON:PokemonInterface = {
-        pokemonName: ''
-    }
+const PokemonCard:React.FC<PokemonCardProps> = ({pokemonName, pokemonFrontSprite, pokemonBackSprite}) => {
+    const [toggleSprite, setToggleSprite] = useState<boolean>(false)
+    //place backSprite on conditional
 
-    const [pokemonInput, setPokemonInput] = useState<PokemonInterface>(INITIAL_POKEMON)
-    const [pokemonName, setPokemonName] = useState<string | null>('')
-    const [pokemonFrontSprite, setPokemonFrontSprite] = useState<string>('')
-    const [isLoaded, setIsLoaded] = useState<boolean>(false)
-    //make a button for randomizing pokemon for getRandomPokemon
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target
-        setPokemonInput((pokemonName => ({...pokemonName, [name]:value}))
-        )}
-
-    const handleSubmit = async(e: React.SyntheticEvent) => {
-        e.preventDefault()
-        try {
-            const getPokemon = await Pokemon.getPokemonByName(pokemonInput.pokemonName)
-            console.log({Pokemon: getPokemon.data})
-            setPokemonName(getPokemon.data.name)
-            setPokemonFrontSprite(getPokemon.data.sprites.front_default)
-
-            setIsLoaded(() => true)
-        } catch (error) {
-            return error
-        }
+    const toggleFrontBack = () => {
+        setToggleSprite((toggle) => !toggle)
     }
 
     return (
-        <section className="container">
-            {isLoaded ?
+        <div>
             <div className="d-flex justify-content-center m-5">
             <Card style={{ width: '18rem' }}>
             <Card.Body>
                 <div className="d-flex justify-content-center">
-                    <img src={pokemonFrontSprite} alt="Pokemon Sprite"/>
+                    <img onClick={toggleFrontBack} src={toggleSprite ? pokemonFrontSprite : pokemonBackSprite} alt="Pokemon Sprite"/>
                 </div>
                 <Card.Title className="first-letter text-center">{pokemonName}</Card.Title>
                 <Card.Text>
@@ -51,25 +26,7 @@ const PokemonCard:React.FC = () => {
             </Card.Body>
             </Card>
             </div>
-            :
-            null
-            }
-
-            <div className="pokemon-card">
-            <form onSubmit={handleSubmit}>
-                <input
-                id="get-pokemon"
-                name="pokemonName"
-                value={pokemonInput.pokemonName}
-                placeholder="Pokemon Name"
-                onChange={handleChange}
-                />
-                <div className="d-flex justify-content-center mt-2">
-                    <button className="btn btn-primary">Get Pokemon</button>
-                </div>
-            </form>
-            </div>
-        </section>
+        </div>
     )
 }
 
